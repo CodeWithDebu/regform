@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-function App() {
+const RegistrationForm = () => {
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: ''
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const response = await axios.post("http://localhost:8000/api/register", formData);
+      console.log(response.data); // Handle the API response as needed
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input type="text" name="username" placeholder="Username" value={formData.username} onChange={handleChange} />
+      <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
+      <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} />
+      <button type="submit">Register</button>
+    </form>
   );
-}
+};
 
-export default App;
+export default RegistrationForm;
