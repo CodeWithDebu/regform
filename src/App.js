@@ -16,7 +16,7 @@ const RegistrationForm = () => {
     e.preventDefault();
     
     try {
-      const response = await axios.post("http://localhost:8000/api/register", formData);
+      const response = await axios.post("http://localhost:8000/api/register/", formData);
       console.log(response.data); // Handle the API response as needed
     } catch (error) {
       console.error(error);
